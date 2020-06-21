@@ -2,13 +2,17 @@
 import React from 'react'
 import './noteCard.scss'
 
-const CARD = "card ID";
+const CARD = 'card ID';
 
-function NoteCard({deleteCard, item, onChange}) {
+function NoteCard({deleteCard, item, onChange, onSave}) {
     
     function onTextAreaChange(e) {
         const { name, value } = e.target;
         onChange(item.id, { [name]: value });
+    }
+
+    function saveSticker() {
+        onSave(item.id);
     }
 
     return (
@@ -21,7 +25,12 @@ function NoteCard({deleteCard, item, onChange}) {
             {/* <span className="card_dragging-area" onMouseDown={handleMouseDown}></span> */}
             {/* <span className="card_dragging-area"></span> */}
             <div className="card_body">
-                <textarea onChange={onTextAreaChange} value={item.value} name="value"></textarea>
+                <textarea 
+                    onChange={onTextAreaChange}
+                    value={item.value}
+                    name="value"
+                    onBlur={saveSticker}
+                ></textarea>
             </div>
         </div>
     )

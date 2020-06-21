@@ -3,7 +3,7 @@ import NoteCard from './noteCard/NoteCard'
 import apiService from '../noteBoardService'
 import './noteBoard.scss'
 
-const BUTTON_TITLE = "create new card";
+const BUTTON_TITLE = 'create new card';
 
 function NoteBoard() {
     const [cards, setNewCards] = useState([]);
@@ -23,7 +23,6 @@ function NoteBoard() {
         //setNewCards(newCard);
 
         apiService.post('', {
-            id: '',
             value: '',
         }).then(({ data }) => setNewCards([...cards, data]));
     }
@@ -34,16 +33,21 @@ function NoteBoard() {
     }
 
     function updCard(id, updatedData) {
-        // let card = cards.find(el => el.id === id);
-        // card = { ...card, ...updatedData };
-        // const newCards = cards.map( item => item.id === card.id ? card : item );
-        //setNewCards(newCards);
+        let card = cards.find(el => el.id === id);
+        card = { ...card, ...updatedData };
+        const newCards = cards.map( item => item.id === card.id ? card : item );
+        setNewCards(newCards);
         
-        apiService.put(id, {...updatedData, value: updatedData.value }).then(({ data }) =>
-            setNewCards(
-                cards.map(item => item.id === data.id ? data : item)
-            )
-        );
+        // apiService.put(id, {...updatedData }).then(({ data }) =>
+        //     setNewCards(
+        //         cards.map(item => item.id === data.id ? data : item)
+        //     )
+        // );
+    }
+
+    function saveCard(id){
+        const card = cards.find((el) => el.id === id);
+        apiService.put(id, card);
     }
     
     return (
@@ -59,6 +63,7 @@ function NoteBoard() {
                             item={item} 
                             deleteCard={deleteCards}
                             onChange={updCard}
+                            onSave={saveCard}
                         ></NoteCard>
                     )) 
                 }
