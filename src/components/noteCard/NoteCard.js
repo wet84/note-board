@@ -11,7 +11,7 @@ function NoteCard({deleteCard, item, onChange, onSave}) {
         onChange(item.id, { [name]: value });
     }
 
-    function saveSticker() {
+    function saveCard() {
         onSave(item.id);
     }
 
@@ -29,7 +29,7 @@ function NoteCard({deleteCard, item, onChange, onSave}) {
                     onChange={onTextAreaChange}
                     value={item.value}
                     name="value"
-                    onBlur={saveSticker}
+                    onBlur={saveCard}
                 ></textarea>
             </div>
         </div>
